@@ -64,21 +64,27 @@ int main()
 
         //std::cout << objects[0].GetVelocity().x << " " << objects[0].GetVelocity().y <<"\n";
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        {
-            camera_pos.x += 1;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+            camera_pos.x += 3;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        {
-            camera_pos.x -= 1;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+            camera_pos.x -= 3;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        {
-            camera_pos.y -= 1;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+            camera_pos.y += 3;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        {
-            camera_pos.y += 1;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+            camera_pos.y -= 3;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
+            scale /= 1.05;
+            camera_pos.x *= 1.05;
+            camera_pos.y *= 1.05;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
+            scale *= 1.05;
+            camera_pos.x /= 1.05;
+            camera_pos.y /= 1.05;
         }
 
         for (int i = 0; i < objects.size(); i++)

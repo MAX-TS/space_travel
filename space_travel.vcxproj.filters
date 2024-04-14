@@ -21,16 +21,16 @@
     <ClCompile Include="gravitationalObject.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="foo.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="trajectory.hpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="foo.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
   </ItemGroup>
 </Project>

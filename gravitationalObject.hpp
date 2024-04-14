@@ -1,6 +1,7 @@
 #include "vector.hpp"
 #include <cmath>
 #include <sfml/Graphics.hpp>
+#include "trajectory.hpp"
 
 using namespace sf;
 
@@ -9,6 +10,7 @@ class GravitationalObject
 public:
 
 	static constexpr double kG = 6.6743e-11;
+	static constexpr size_t max_size = 300;
 
 	GravitationalObject(const Vector& position, const Vector& velocity, const double mass, const double radius, const Color color)
 	{
@@ -37,6 +39,7 @@ public:
 		position_.x += velocity_.x * delta_time;
 		position_.y += velocity_.y * delta_time;
 		position_.z += velocity_.z * delta_time;
+		trajectory_.NewPoint(position_);
 	}
 
 	void Render(RenderWindow& window, double const scale, Vector2f camera_pos)
@@ -47,6 +50,7 @@ public:
 		shape.setPosition((position_.x - radius_) / scale + size.x / 2 + camera_pos.x,
 			(position_.y - radius_) / scale + size.y / 2 + camera_pos.y);
 		window.draw(shape);
+		trajectory_.Render(window, scale, camera_pos);
 	}
 
 	double GetMass() { return mass_; }
@@ -60,5 +64,6 @@ private:
 	double mass_;
 	double radius_;
 	Color color_;
+	Trajectory trajectory_{max_size};
 
 };
