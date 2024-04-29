@@ -24,9 +24,18 @@
     <ClCompile Include="trajectory.hpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="projection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vector.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="maneuver.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="projection.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

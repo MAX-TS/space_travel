@@ -1,7 +1,9 @@
+#pragma once
 #include "vector.hpp"
 #include <cmath>
 #include <sfml/Graphics.hpp>
 #include "trajectory.hpp"
+#include "projection.hpp"
 
 using namespace sf;
 
@@ -39,18 +41,35 @@ public:
 		position_.x += velocity_.x * delta_time;
 		position_.y += velocity_.y * delta_time;
 		position_.z += velocity_.z * delta_time;
-		trajectory_.NewPoint(position_);
 	}
 
-	void Render(RenderWindow& window, double const scale, Vector2f camera_pos)
+	void RecordPosition(Vector position)
+	{
+		trajectory_.NewPoint(position);
+	}
+
+	void RecordFuturePosition(Vector position)
+	{
+		future_trajectory_.NewPoint(position);
+	}
+
+	void Render(RenderWindow& window, const double scale, const Vector camera_pos, const Vector2<double> camera_rotaton, const double focal_length)
 	{
 		const auto size = window.getSize();
-		CircleShape shape(radius_ / scale, 100.0f);
+		Vector local_position = GetLocalPosition(position_, camera_pos, camera_rotaton);
+		Vector2<float> render_position = Project(local_position, focal_length);
+		float projected_radius = radius_ * focal_length / local_position.y;
+		CircleShape shape(projected_radius, 100.0f);
 		shape.setFillColor(color_);
-		shape.setPosition((position_.x - radius_) / scale + size.x / 2 + camera_pos.x,
-			(position_.y - radius_) / scale + size.y / 2 + camera_pos.y);
+		shape.setPosition(render_position.x - projected_radius + size.x / 2,
+			render_position.y - projected_radius + size.y / 2);
 		window.draw(shape);
-		trajectory_.Render(window, scale, camera_pos);
+		/*shape.setPosition((position_.x + camera_pos.x) / scale  - radius_ / scale + size.x / 2,
+			(position_.y + camera_pos.y) / scale - radius_ / scale + size.y / 2);
+		window.draw(shape);*/
+		
+		trajectory_.Render(window, scale, camera_pos, camera_rotaton, focal_length);
+		//future_trajectory_.Render(window, scale, camera_pos, camera_rotaton, focal_length);
 	}
 
 	double GetMass() { return mass_; }
@@ -65,5 +84,6 @@ private:
 	double radius_;
 	Color color_;
 	Trajectory trajectory_{max_size};
+	Trajectory future_trajectory_{max_size};
 
 };
